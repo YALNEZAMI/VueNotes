@@ -15,6 +15,11 @@ let title = ref("");
 let details = ref("");
 let date = ref("");
 let adding = ref(false);
+let search = ref(""); //search input word key
+
+const searchNotes = () => {
+  notes.value = storedNotes.filter((note) => note.title.includes(search.value));
+};
 
 const add = () => {
   //validation
@@ -118,7 +123,7 @@ const deleteNote = (id) => {
     </div>
   </div>
   <div class="container">
-    <header class="flex bg-red-700">
+    <header class="flex bg-teal-300">
       <h1 class="text-4xl mx-4 my-">Notes</h1>
       <button
         @click="adding = true"
@@ -127,7 +132,17 @@ const deleteNote = (id) => {
         +
       </button>
     </header>
-    <main>
+    <div class="bg-teal-400 m-1">
+      <input
+        class="placeholder:italic placeholder:text-slate-400 block bg-white w-full border border-slate-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-sky-500 focus:ring-sky-500 focus:ring-1 sm:text-sm"
+        placeholder="Search for a notes..."
+        type="text"
+        v-model="search"
+        @input="searchNotes"
+      />
+    </div>
+
+    <main class="bg-teal-700 min-h-screen">
       <div v-if="notes.length == 0" class="noNotes my-3 text-center text-2xl">
         No note yet, add some !
       </div>
@@ -143,10 +158,10 @@ const deleteNote = (id) => {
             <ins>{{ note.title }}</ins>
           </h3>
 
-          <p class="details text-sm">
+          <p class="details text-sm text-center">
             {{ note.details }}
           </p>
-          <span class="my-2 text-sm font-bold">{{ note.date }}</span>
+          <div class="my-1 text-center text-xs font-bold">{{ note.date }}</div>
           <div class="text-center">
             <button @click="deleteNote(note.id)" class="text-red-700 h-3">
               <svg
@@ -181,10 +196,7 @@ const deleteNote = (id) => {
   background-color: aquamarine;
   overflow: hidden;
 }
-main {
-  background-color: aliceblue;
-  min-height: 100vh;
-}
+
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
