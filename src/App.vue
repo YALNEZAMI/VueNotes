@@ -13,6 +13,7 @@ const notes = ref([]);
 notes.value = storedNotes;
 let title = ref("");
 let details = ref("");
+let date = ref("");
 let adding = ref(false);
 
 const add = () => {
@@ -23,7 +24,7 @@ const add = () => {
     id: Math.random(),
     title: title.value,
     details: details.value,
-    date: new Date().toLocaleString(),
+    date: date.value.toLocaleString().replace(/T/, " "),
     color: "hsl(" + Math.random() * 360 + ", 100%, 75%)",
   };
   //adding the note to the notes array
@@ -58,9 +59,9 @@ const deleteNote = (id) => {
           <input
             v-model="title"
             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="username"
             type="text"
             placeholder="Visit Mom"
+            required
           />
         </div>
         <div class="mb-6">
@@ -75,7 +76,23 @@ const deleteNote = (id) => {
             class="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             placeholder="Buy her a flour ..."
+            required
           ></textarea>
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="username"
+          >
+            Date de l'événement
+          </label>
+          <input
+            v-model="date"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="datetime-local"
+            placeholder="Visit Mom"
+            required
+          />
         </div>
 
         <div class="flex items-center justify-between">
@@ -122,7 +139,7 @@ const deleteNote = (id) => {
           class="card mx-2 my-2 px-1 py-1 rounded"
           :style="{ backgroundColor: note.color }"
         >
-          <h3 class="text-2xl my-1">
+          <h3 class="text-2xl text-center my-1">
             <ins>{{ note.title }}</ins>
           </h3>
 
