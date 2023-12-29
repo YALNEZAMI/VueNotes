@@ -32,7 +32,8 @@ watch(search, () => {
 
 const add = () => {
   //validation
-  if (!title.value || !details.value) return alert("Please fill all fields");
+  if (!title.value || !details.value || !date.value)
+    return alert("Please fill all fields");
   //creation of the note object
   let note = {
     id: Math.random(),
